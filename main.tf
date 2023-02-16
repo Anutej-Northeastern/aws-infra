@@ -9,7 +9,7 @@ module "vpc_1" {
   private_cidrs          = var.private_cidrs
   public_cidrs           = var.public_cidrs
   aws_availability_zones = var.aws_availability_zones
-
+}
 module "vpc_2" {
   source = "./modules/networking"
   /*
