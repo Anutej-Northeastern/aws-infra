@@ -6,9 +6,3 @@ resource "aws_vpc" "my_vpc" {
     Name = "VPC_Terraform"
   }
 }
-
-output "vpcid" {
-  value = aws_vpc.my_vpc.id
-  description = "VPC Id"
-  sensitive = false
-}
