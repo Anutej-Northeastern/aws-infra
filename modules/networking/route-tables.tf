@@ -3,7 +3,7 @@ resource "aws_route_table" "public_rt" {
 
   vpc_id = aws_vpc.my_vpc.id
   tags = {
-    Name = "public_route_table"
+    Name = "Public_RouteTable_Terraform"
   }
 }
 
@@ -12,6 +12,6 @@ resource "aws_route_table" "private_rt" {
 
   vpc_id = aws_vpc.my_vpc.id
   tags = {
-    Name = "private_route_table"
+    Name = "Private_RouteTable_Terraform"
   }
 }

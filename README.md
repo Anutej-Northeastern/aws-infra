@@ -18,3 +18,4 @@ We are using this repo to implement Infra for AWS upon which the resources will 
 
 ## Notes:
 1. We need to make sure that once we make changes to the region in the variable file we need to make changes to availability zones as well in the main and variables file.
+2. To add variable while applying run in this format `terraform apply -var "var_name=value"`

@@ -8,7 +8,7 @@ resource "aws_subnet" "public_subnet" {
   availability_zone       = var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]
   map_public_ip_on_launch = true
   tags = {
-    Name = "public_subnet - ${var.public_cidrs[count.index]} - ${var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]}"
+    Name = "Public_SubNet_Terraform- ${var.public_cidrs[count.index]} - ${var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]}"
   }
 }
 
@@ -21,6 +21,6 @@ resource "aws_subnet" "private_subnet" {
   availability_zone       = var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]
   map_public_ip_on_launch = true
   tags = {
-    Name = "private_subnet - ${var.private_cidrs[count.index]} - ${var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]}"
+    Name = "Public_SubNet_Terraform- ${var.private_cidrs[count.index]} - ${var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]}"
   }
 }
