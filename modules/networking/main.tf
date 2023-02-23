@@ -46,14 +46,14 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_instance" "example" {
-  ami                     = "ami-071b0fc939ab10537"
+  ami                     = var.ami_val
   instance_type           = "t2.micro"
   vpc_security_group_ids  = [aws_security_group.sg.id]
   subnet_id               = element(aws_subnet.public_subnet.*.id, 0)
   key_name                = aws_key_pair.deployer.key_name
-  disable_api_termination = false
+  disable_api_termination = true
   root_block_device {
-    volume_size           = 8
+    volume_size           = 50
     volume_type           = "gp2"
     delete_on_termination = true
   }
