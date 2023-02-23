@@ -58,6 +58,6 @@ resource "aws_instance" "example" {
     delete_on_termination = true
   }
   tags = {
-    "Name" = "Ec2_Terraform-{{timestamp}}"
+    "Name" = "Ec2_Terraform-${timestamp()}"
   }
 }
