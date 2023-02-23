@@ -14,19 +14,19 @@ resource "aws_security_group" "sg" {
   ingress {
     from_port   = 22
     to_port     = 22
-    protocol    = "tcp"
+    protocol    = "ssh"
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = 80
     to_port     = 80
-    protocol    = "tcp"
+    protocol    = "http"
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = 443
     to_port     = 443
-    protocol    = "tcp"
+    protocol    = "https"
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
@@ -34,6 +34,9 @@ resource "aws_security_group" "sg" {
     to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "application_security_group"
   }
 }
 
