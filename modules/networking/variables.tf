@@ -26,6 +26,6 @@ variable "ssh_key" {
 
 variable "ami_val" {
   type    = string
-  default = "ami-0d7cd1bbaf231102c"
+  default = "ami-0dfcb1ef8550277af"
 }
 
