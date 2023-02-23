@@ -52,6 +52,7 @@ resource "aws_instance" "example" {
   subnet_id               = element(aws_subnet.public_subnet.*.id, 0)
   key_name                = aws_key_pair.deployer.key_name
   disable_api_termination = true
+
   root_block_device {
     volume_size           = 50
     volume_type           = "gp2"
@@ -60,4 +61,5 @@ resource "aws_instance" "example" {
   tags = {
     "Name" = "Ec2_Terraform-${timestamp()}"
   }
+
 }
