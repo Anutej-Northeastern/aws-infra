@@ -27,3 +27,10 @@ resource "aws_subnet" "private_subnet" {
     Name = "Private_Subnet - ${var.private_cidrs[count.index]} - ${var.aws_availability_zones[count.index % (length(var.aws_availability_zones))]}"
   }
 }
+
+output "public_subnets_ids" {
+  value = aws_subnet.public_subnet.*.id
+}
+output "private_subnets_ids" {
+  value = aws_subnet.private_subnet.*.id
+}
