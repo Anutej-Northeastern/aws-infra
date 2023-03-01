@@ -31,3 +31,13 @@ variable "aws_availability_zones" {
   type    = list(string)
   default = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
+
+# Ec2 instance Variables
+variable "ssh_key" {
+  type = string
+}
+
+variable "ami_val" {
+  type    = string
+  default = "ami-0dfcb1ef8550277af"
+}
