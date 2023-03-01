@@ -3,7 +3,7 @@ resource "aws_instance" "example" {
   instance_type           = "t2.micro"
   vpc_security_group_ids  = [aws_security_group.sg.id]
   subnet_id               = var.public_subnets_ids[0]
-  key_name                = aws_key_pair.deployer.key_name
+  key_name                = var.ssh_key
   disable_api_termination = true
 
   root_block_device {
