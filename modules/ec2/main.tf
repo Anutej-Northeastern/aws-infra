@@ -1,3 +1,7 @@
+resource "random_id" "randm" {
+  byte_length = 4
+}
+
 #database security group
 resource "aws_security_group" "database" {
   name        = "database"
@@ -15,9 +19,19 @@ resource "aws_security_group" "database" {
   }
 }
 
+#RDS subnet group
+resource "aws_db_subnet_group" "db_subnet_group" {
+  name        = "db-subnet-group-${random_id.randm.hex}"
+  description = "RDS subnet group for database"
+  subnet_ids  = var.private_subnets_ids
+  tags = {
+    Name = "db_subnet_group"
+  }
+}
+
 #RDS parameter group
 resource "aws_db_parameter_group" "my_rds_pg" {
-  name        = "my-db-pg"
+  name        = "my-db-pg-${random_id.randm.hex}"
   family      = "postgres14"
   description = "Custom RDS parameter group for postgres 13 database"
   #   parameter {
@@ -41,6 +55,7 @@ resource "aws_db_instance" "my_rds_instance" {
   allocated_storage         = 20
   storage_type              = "gp2"
   multi_az                  = false
+  skip_final_snapshot       = true
   final_snapshot_identifier = "final-snapshot"
   publicly_accessible       = true
   db_subnet_group_name      = aws_db_subnet_group.db_subnet_group.name
@@ -54,6 +69,7 @@ resource "aws_db_instance" "my_rds_instance" {
 resource "aws_security_group" "sg" {
 
   name_prefix = "app-sg"
+  description = "Security group for web application instances"
   vpc_id      = var.vpc_id
 
   #inbound rule for ssh
@@ -87,53 +103,58 @@ resource "aws_security_group" "sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "application"
+  }
+
 }
 
-#RDS subnet group
-resource "aws_db_subnet_group" "db_subnet_group" {
-  name        = "db_subnet_group"
-  description = "RDS subnet group for database"
-  subnet_ids  = var.private_subnets_ids
-  tags = {
-    Name = "db_subnet_group"
-  }
-}
+
+
 
 
 
 #creating a new ec2 instance
 resource "aws_instance" "my_ec2" {
-  ami                    = var.ami_id
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.sg.id]
-  subnet_id              = var.subnet_id
-  key_name               = var.key_pair
+  ami                         = var.ami_id
+  instance_type               = "t2.micro"
+  key_name                    = var.key_pair
+  associate_public_ip_address = true
+  vpc_security_group_ids      = [aws_security_group.sg.id]
+  subnet_id                   = var.subnet_id
+  disable_api_termination     = false
+  iam_instance_profile        = aws_iam_instance_profile.app_instance_profile.name
+
   root_block_device {
     volume_size           = 50
     volume_type           = "gp2"
     delete_on_termination = true
   }
-  disable_api_termination = true
 
   #   code for the user data
   user_data = <<EOF
 
 #!/bin/bash
+echo "\n"
+echo "DB_USER=${var.db_username}" >> /home/ec2-user/webapp/.env
+echo "DB_PASSWORD=${var.db_password}" >> /home/ec2-user/webapp/.env
+echo "DB_HOST=${aws_db_instance.my_rds_instance.endpoint}" >> /home/ec2-user/webapp/.env
+echo "DB_NAME=${var.db_name}" >> /home/ec2-user/webapp/.env
+echo "S3_BUCKET=${var.bucket_name}" >> /home/ec2-user/webapp/.env
+echo "S3_REGION=${var.region}" >> /home/ec2-user/webapp/.env
+EOF
 
-echo "export DB_USER=${var.db_username} " >> /home/ec2-user/webapp/.env
-echo "export DB_PASSWORD=${var.db_password} " >> /home/ec2-user/webapp/.env
-echo "export DB_HOST=${aws_db_instance.my_rds_instance.endpoint} " >> /home/ec2-user/webapp/.env
-echo "export DB_NAME=${var.db_name} " >> /home/ec2-user/webapp/.env
-echo "export S3_BUCKET=${var.bucket_name} " >> /home/ec2-user/webapp/.env
-echo "export S3_REGION=${var.region} " >> /home/ec2-user/webapp/.env
-sudo chmod +x setenv.sh
-sh setenv.sh
-
- EOF
   tags = {
-    "Name" = "Ec2_Terraform-${timestamp()}"
+    "Name" = "My_Ec2_${timestamp()}"
   }
 }
+
 
 #attach iam role to ec2 instance
 resource "aws_iam_instance_profile" "app_instance_profile" {
@@ -163,4 +184,5 @@ output "database_password" {
 output "database_endpoint" {
   value = aws_db_instance.my_rds_instance.endpoint
 }
+
 
