@@ -1,4 +1,7 @@
+/*
+we define AWS keys and region
+*/
 provider "aws" {
-  profile = var.profile
   region  = var.region
+  profile = var.profile
 }

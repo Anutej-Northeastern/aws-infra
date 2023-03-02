@@ -18,3 +18,5 @@ variable "private_cidrs" {
 variable "aws_availability_zones" {
   type = list(string)
 }
+
+

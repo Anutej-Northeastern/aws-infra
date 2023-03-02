@@ -1,18 +1,23 @@
+
 variable "ami_id" {
   type    = string
   default = "ami-0dfcb1ef8550277af"
 }
+
 variable "vpc_id" {
   type = string
 }
+
 
 # variable "app-sg" {
 #   type = string
 # }
 
+
 variable "subnet_id" {
   type = string
 }
+
 
 variable "private_subnets_ids" {
   type = list(string)
@@ -20,6 +25,7 @@ variable "private_subnets_ids" {
 }
 
 variable "key_pair" {
+
   type    = string
   default = "ec2"
 }
