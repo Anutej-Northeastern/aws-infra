@@ -1,17 +1,49 @@
-variable "ssh_key" {
-  type = string
+variable "ami_id" {
+  type    = string
+  default = "ami-0dfcb1ef8550277af"
 }
-
-variable "ami_val" {
-  type = string
-}
-
 variable "vpc_id" {
-  description = "The ID of the VPC"
-  type        = string
+  type = string
 }
 
-variable "public_subnets_ids" {
-  description = "The ID of the VPC"
-  type        = list(string)
+# variable "app-sg" {
+#   type = string
+# }
+
+variable "subnet_id" {
+  type = string
+}
+
+variable "private_subnets_ids" {
+  type = list(string)
+
+}
+
+variable "key_pair" {
+  type    = string
+  default = "ec2"
+}
+
+variable "db_name" {
+  type = string
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
+}
+
+variable "bucket_name" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+
+variable "ec2_iam_role" {
+  description = "The name of the IAM role"
 }
