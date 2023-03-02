@@ -2,9 +2,10 @@ variable "region" {
   type    = string
   default = "us-east-1"
 }
+
 variable "profile" {
   type    = string
-  default = "dev"
+  default = "demo"
 }
 
 variable "cidr" {
@@ -32,12 +33,22 @@ variable "aws_availability_zones" {
   default = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
-# Ec2 instance Variables
-variable "ssh_key" {
+variable "ami_id" {
   type = string
 }
 
-variable "ami_val" {
-  type    = string
-  default = "ami-0dfcb1ef8550277af"
+variable "key_pair" {
+  type = string
+}
+
+variable "db_username" {
+  type = string
+}
+
+variable "db_name" {
+  type = string
+}
+
+variable "db_password" {
+  type = string
 }
