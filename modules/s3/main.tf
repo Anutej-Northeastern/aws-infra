@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "my_s3" {
   bucket        = "my-s3-${random_id.rand.hex}"
   acl           = "private"
   force_destroy = true
-  
+
 
   #Create a lifecycle policy for the bucket to transition objects from STANDARD storage class to STANDARD_IA storage class after 30 days.
   lifecycle_rule {
