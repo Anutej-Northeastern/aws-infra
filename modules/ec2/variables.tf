@@ -18,6 +18,15 @@ variable "subnet_id" {
   type = string
 }
 
+variable "zone_id" {
+  type = string
+}
+
+variable "domain_name" {
+  type = string
+}
+
+
 
 variable "private_subnets_ids" {
   type = list(string)

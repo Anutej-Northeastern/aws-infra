@@ -39,5 +39,6 @@ module "my-ec2" {
   db_name             = var.db_name
   ec2_iam_role        = module.my_s3.IAM_role
   bucket_name         = module.my_s3.s3_bucket_name
-
+  zone_id             = var.zone_id
+  domain_name         = var.domain_name
 }

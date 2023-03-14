@@ -52,3 +52,12 @@ variable "db_name" {
 variable "db_password" {
   type = string
 }
+
+variable "zone_id" {
+  type = string
+}
+
+variable "domain_name" {
+  type = string
+}
+
