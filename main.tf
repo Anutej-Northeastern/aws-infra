@@ -1,6 +1,3 @@
-/*
-we call our modules here
-*/
 module "my-network" {
 
   #mention the folder where your module is
@@ -14,13 +11,6 @@ module "my-network" {
   aws_availability_zones = var.aws_availability_zones
 
 }
-
-
-# module "my-ec2" {
-#   source    = "./modules/ec2"
-#   vpc_id    = module.my-network.vpc_id
-#   subnet_id = module.my-network.subnet_id
-# }
 
 module "my_s3" {
   source = "./modules/s3"
