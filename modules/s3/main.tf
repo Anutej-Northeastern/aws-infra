@@ -29,6 +29,15 @@ resource "aws_s3_bucket" "my_s3" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "public_access" {
+  bucket = aws_s3_bucket.my_s3.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
 #IAM policy for ec2 to access the s3 bucket
 resource "aws_iam_policy" "my_WebAppS3_policy" {
   name = "WebAppS3"
