@@ -13,7 +13,6 @@ resource "aws_security_group" "database" {
     to_port         = "5432"
     security_groups = [aws_security_group.sg.id]
   }
-
   tags = {
     "Name" = "database-sg"
   }
@@ -34,10 +33,6 @@ resource "aws_db_parameter_group" "my_rds_pg" {
   name        = "my-db-pg-${random_id.randm.hex}"
   family      = "postgres14"
   description = "Custom RDS parameter group for postgres 13 database"
-  #   parameter {
-  #     name  = "character_set_server"
-  #     value = "utf8"
-  #   }
 }
 
 
@@ -67,11 +62,9 @@ resource "aws_db_instance" "my_rds_instance" {
 
 #security group to my ec2 instance
 resource "aws_security_group" "sg" {
-
   name_prefix = "app-sg"
   description = "Security group for web application instances"
   vpc_id      = var.vpc_id
-
   #inbound rule for ssh
   ingress {
     from_port   = 22
@@ -79,7 +72,6 @@ resource "aws_security_group" "sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   #inbound rules for http
   ingress {
     from_port   = 80
@@ -87,7 +79,6 @@ resource "aws_security_group" "sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   #inbound rules for https
   ingress {
     from_port   = 443
@@ -95,7 +86,6 @@ resource "aws_security_group" "sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   #inbound rules for my app
   ingress {
     from_port   = 3000
@@ -115,11 +105,6 @@ resource "aws_security_group" "sg" {
 
 }
 
-
-
-
-
-
 #creating a new ec2 instance
 resource "aws_instance" "my_ec2" {
   ami                         = var.ami_id
@@ -130,25 +115,22 @@ resource "aws_instance" "my_ec2" {
   subnet_id                   = var.subnet_id
   disable_api_termination     = false
   iam_instance_profile        = aws_iam_instance_profile.app_instance_profile.name
-
   root_block_device {
     volume_size           = 50
     volume_type           = "gp2"
     delete_on_termination = true
   }
-
   #   code for the user data
   user_data = <<EOF
-
-#!/bin/bash
-echo "\n"
-echo "DB_USER=${var.db_username}" >> /home/ec2-user/webapp/.env
-echo "DB_PASSWORD=${var.db_password}" >> /home/ec2-user/webapp/.env
-echo "DB_HOST=${aws_db_instance.my_rds_instance.endpoint}" >> /home/ec2-user/webapp/.env
-echo "DB_NAME=${var.db_name}" >> /home/ec2-user/webapp/.env
-echo "S3_BUCKET=${var.bucket_name}" >> /home/ec2-user/webapp/.env
-echo "S3_REGION=${var.region}" >> /home/ec2-user/webapp/.env
-EOF
+  #!/bin/bash
+  echo "\n"
+  echo "DB_USER=${var.db_username}" >> /home/ec2-user/webapp/.env
+  echo "DB_PASSWORD=${var.db_password}" >> /home/ec2-user/webapp/.env
+  echo "DB_HOST=${aws_db_instance.my_rds_instance.endpoint}" >> /home/ec2-user/webapp/.env
+  echo "DB_NAME=${var.db_name}" >> /home/ec2-user/webapp/.env
+  echo "S3_BUCKET=${var.bucket_name}" >> /home/ec2-user/webapp/.env
+  echo "S3_REGION=${var.region}" >> /home/ec2-user/webapp/.env
+  EOF
 
   tags = {
     "Name" = "My_Ec2_${timestamp()}"
@@ -162,11 +144,7 @@ resource "aws_iam_instance_profile" "app_instance_profile" {
   role = var.ec2_iam_role
 }
 
-# output "app-sg_id" {
-#   value = aws_security_group.sg.Id
-# }
-
-
+# Inserting A record in the route53 hosted Zone
 resource "aws_route53_record" "www" {
   zone_id = var.zone_id
   name    = var.domain_name
