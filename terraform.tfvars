@@ -7,7 +7,7 @@ private_cidrs = ["10.1.4.0/24", "10.1.5.0/24", "10.1.6.0/24"]
 
 aws_availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
 
-ami_id   = "ami-075a778a5a4281409"
+ami_id   = "ami-026ca488594073c72"
 key_pair = "Ec2"
 
 db_name     = "csye6225"
