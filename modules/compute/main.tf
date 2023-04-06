@@ -187,7 +187,7 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns = [aws_lb_target_group.alb_tg.arn]
 }
 
-# Create a Scaling policy for scaling up
+# Scaling up and Scaling Down Policies
 
 resource "aws_cloudwatch_metric_alarm" "scale_up_alarm" {
   alarm_name          = "scale-up-alarm"
@@ -198,7 +198,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_up_alarm" {
   namespace           = "AWS/EC2"
   period              = "30"
   statistic           = "Average"
-  threshold           = "3"
+  threshold           = "1"
   dimensions = {
     "AutoScalingGroupName" = aws_autoscaling_group.asg.name
   }
@@ -215,6 +215,21 @@ resource "aws_autoscaling_policy" "scale_up" {
   cooldown               = "60"
 }
 
+
+# resource "aws_autoscaling_policy" "asg_cpu_policy" {
+# name = "csye6225-asg-cpu"
+# autoscaling_group_name = aws_autoscaling_group.asg.name
+# adjustment_type = "ChangeInCapacity"
+# policy_type = "TargetTrackingScaling"
+# # CPU Utilization is above 40%
+# target_tracking_configuration {
+# predefined_metric_specification {
+# predefined_metric_type = "ASGAverageCPUUtilization"
+# }
+# target_value = 2.0
+# }
+# }
+
 resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   alarm_name          = "scale-down-alarm"
   alarm_description   = "Scale down when average CPU usage is below 2%"
@@ -224,7 +239,7 @@ resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   namespace           = "AWS/EC2"
   period              = "60"
   statistic           = "Average"
-  threshold           = "2"
+  threshold           = "3"
   dimensions = {
     "AutoScalingGroupName" = aws_autoscaling_group.asg.name
   }
