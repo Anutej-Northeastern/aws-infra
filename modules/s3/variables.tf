@@ -1,3 +1,3 @@
 variable "policyARN" {
-    type = string
+  type = string
 }
