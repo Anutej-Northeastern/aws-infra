@@ -192,7 +192,7 @@ resource "aws_autoscaling_group" "asg" {
 resource "aws_cloudwatch_metric_alarm" "scale_up_alarm" {
   alarm_name          = "scale-up-alarm"
   alarm_description   = "Scale up when average CPU usage is greater than 3%"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
+  comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
