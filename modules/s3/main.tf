@@ -84,7 +84,16 @@ resource "aws_iam_role_policy_attachment" "WebAppS3_role_policy_attachment" {
 
 resource "aws_iam_role_policy_attachment" "CloudwatchPolicy" {
   role       = aws_iam_role.WebAppS3_role.name
-  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+  policy_arn = var.policyARN
+}
+
+resource "aws_cloudwatch_log_group" "csye6225_lg" {
+  name = "csye6225"
+}
+
+resource "aws_cloudwatch_log_stream" "foo" {
+  name           = "webapp"
+  log_group_name = aws_cloudwatch_log_group.csye6225_lg.name
 }
 
 output "s3_bucket_name" {

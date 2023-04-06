@@ -7,12 +7,14 @@ private_cidrs = ["10.1.4.0/24", "10.1.5.0/24", "10.1.6.0/24"]
 
 aws_availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
 
-ami_id   = "ami-026ca488594073c72"
+ami_id   = "ami-0eb93d0e82ee6dff9"
 key_pair = "Ec2"
 
 db_name     = "csye6225"
 db_username = "csye6225"
 db_password = "p0stgres987"
+
+policyARN = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 
 profile     = "prod"                  # Demo Profile
 zone_id     = "Z00013201MESJB4SQS7CO" #Demo zone Id

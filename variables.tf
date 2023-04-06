@@ -61,3 +61,6 @@ variable "domain_name" {
   type = string
 }
 
+variable "policyARN" {
+  type = string
+}

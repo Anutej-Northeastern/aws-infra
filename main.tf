@@ -13,16 +13,18 @@ module "my-network" {
 }
 
 module "my_s3" {
-  source = "./modules/s3"
+  source    = "./modules/s3"
+  policyARN = var.policyARN
 }
 
 module "my-ec2" {
   region              = var.region
-  source              = "./modules/ec2"
+  source              = "./modules/compute"
   ami_id              = var.ami_id
   key_pair            = var.key_pair
   vpc_id              = module.my-network.vpc_id
   subnet_id           = module.my-network.subnet_id
+  subnet_ids          = module.my-network.subnet_ids
   private_subnets_ids = module.my-network.private_subnets_ids
   db_username         = var.db_username
   db_password         = var.db_password
