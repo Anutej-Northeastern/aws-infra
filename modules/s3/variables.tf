@@ -1,0 +1,3 @@
+variable "policyARN" {
+  type = string
+}

@@ -8,18 +8,12 @@ variable "vpc_id" {
   type = string
 }
 
-
-# variable "app-sg" {
-#   type = string
-# }
-
-
 variable "subnet_id" {
   type = string
 }
-
-
-
+variable "subnet_ids" {
+  type = list(string)
+}
 
 variable "private_subnets_ids" {
   type = list(string)
@@ -29,7 +23,7 @@ variable "private_subnets_ids" {
 variable "key_pair" {
 
   type    = string
-  default = "ec2"
+  default = "Ec2"
 }
 
 variable "db_name" {
@@ -55,7 +49,6 @@ variable "region" {
 variable "ec2_iam_role" {
   description = "The name of the IAM role"
 }
-
 
 variable "zone_id" {
   type = string
