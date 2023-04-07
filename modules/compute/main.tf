@@ -148,7 +148,6 @@ resource "aws_launch_template" "ec2" {
       delete_on_termination = true
     }
   }
-  # vpc_security_group_ids = [aws_security_group.sg.id]
   network_interfaces {
     security_groups             = [aws_security_group.sg.id]
     associate_public_ip_address = true
@@ -191,19 +190,19 @@ resource "aws_autoscaling_group" "asg" {
 
 resource "aws_cloudwatch_metric_alarm" "scale_up_alarm" {
   alarm_name          = "scale-up-alarm"
-  alarm_description   = "Scale up when average CPU usage is greater than 3%"
-  comparison_operator = "GreaterThanOrEqualToThreshold"
+  alarm_description   = "Scale Up Alarm"
+  comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "30"
-  statistic           = "Average"
-  threshold           = "1"
+  period              = "60"
+  statistic           = "Minimum"
+  threshold           = "2"
   dimensions = {
-    "AutoScalingGroupName" = aws_autoscaling_group.asg.name
+    "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
   }
   actions_enabled = true
-  alarm_actions   = [aws_autoscaling_policy.scale_up.arn]
+  alarm_actions   = ["${aws_autoscaling_policy.scale_up.arn}"]
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
@@ -215,36 +214,21 @@ resource "aws_autoscaling_policy" "scale_up" {
   cooldown               = "60"
 }
 
-
-# resource "aws_autoscaling_policy" "asg_cpu_policy" {
-# name = "csye6225-asg-cpu"
-# autoscaling_group_name = aws_autoscaling_group.asg.name
-# adjustment_type = "ChangeInCapacity"
-# policy_type = "TargetTrackingScaling"
-# # CPU Utilization is above 40%
-# target_tracking_configuration {
-# predefined_metric_specification {
-# predefined_metric_type = "ASGAverageCPUUtilization"
-# }
-# target_value = 2.0
-# }
-# }
-
 resource "aws_cloudwatch_metric_alarm" "scale_down_alarm" {
   alarm_name          = "scale-down-alarm"
-  alarm_description   = "Scale down when average CPU usage is below 2%"
+  alarm_description   = "Scale Down Alarm"
   comparison_operator = "LessThanThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "4"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
   period              = "60"
   statistic           = "Average"
   threshold           = "3"
   dimensions = {
-    "AutoScalingGroupName" = aws_autoscaling_group.asg.name
+    "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
   }
   actions_enabled = true
-  alarm_actions   = [aws_autoscaling_policy.scale_down.arn]
+  alarm_actions   = ["${aws_autoscaling_policy.scale_down.arn}"]
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
@@ -318,7 +302,6 @@ resource "aws_route53_record" "www" {
     zone_id                = aws_lb.lb.zone_id
     evaluate_target_health = true
   }
-  # ttl     = 60
 }
 
 
