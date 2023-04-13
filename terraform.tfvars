@@ -16,10 +16,12 @@ db_password = "p0stgres987"
 
 policyARN = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 
-profile     = "prod"                  # Demo Profile
-zone_id     = "Z00013201MESJB4SQS7CO" #Demo zone Id
-domain_name = "prod.apoddaturi.me"    #Demo Domain name
+profile     = "prod"                                                                                # Demo Profile
+zone_id     = "Z00013201MESJB4SQS7CO"                                                               #Demo zone Id
+domain_name = "prod.apoddaturi.me"                                                                  #Demo Domain name
+cert_arn    = "arn:aws:acm:us-east-1:778516090662:certificate/c3317376-aa3e-4d4b-a4ca-1c7ba3d62d4f" # Demo Certificate Arn
 
 # profile     = "dev"                   # Dev Profile
 # zone_id     = "Z08796222T9PRBMNUKUNX" #Dev zone Id
 # domain_name = "dev.apoddaturi.me"     #Dev Domain name
+# cert_arn = "arn:aws:acm:us-east-1:381467478370:certificate/ea2f437d-a2f9-45c3-bdce-b9caecc17faf" # Dev Certificate Arn
