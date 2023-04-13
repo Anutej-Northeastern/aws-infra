@@ -33,4 +33,5 @@ module "my-ec2" {
   bucket_name         = module.my_s3.s3_bucket_name
   zone_id             = var.zone_id
   domain_name         = var.domain_name
+  cert_arn            = var.cert_arn
 }

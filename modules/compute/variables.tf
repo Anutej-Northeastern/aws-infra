@@ -11,6 +11,7 @@ variable "vpc_id" {
 variable "subnet_id" {
   type = string
 }
+
 variable "subnet_ids" {
   type = list(string)
 }
@@ -55,5 +56,9 @@ variable "zone_id" {
 }
 
 variable "domain_name" {
+  type = string
+}
+
+variable "cert_arn" {
   type = string
 }
