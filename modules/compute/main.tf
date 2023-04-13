@@ -168,7 +168,7 @@ resource "aws_db_instance" "my_rds_instance" {
   final_snapshot_identifier = "final-snapshot"
   publicly_accessible       = false
   db_subnet_group_name      = aws_db_subnet_group.db_subnet_group.name
-  storage_encrypted      = true
+  storage_encrypted         = true
   kms_key_id                = aws_kms_key.rds_security_key.arn
   tags = {
     Name = "db_instance"
