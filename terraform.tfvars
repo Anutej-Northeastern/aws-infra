@@ -19,7 +19,8 @@ policyARN = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 profile     = "prod"                                                                                # Demo Profile
 zone_id     = "Z00013201MESJB4SQS7CO"                                                               #Demo zone Id
 domain_name = "prod.apoddaturi.me"                                                                  #Demo Domain name
-cert_arn    = "arn:aws:acm:us-east-1:778516090662:certificate/c3317376-aa3e-4d4b-a4ca-1c7ba3d62d4f" # Demo Certificate Arn
+cert_arn    = "arn:aws:acm:us-east-1:778516090662:certificate/ceb8fc02-153d-443f-9e77-070f2f775c88" # Demo Certificate ARN
+# cert_arn    = "arn:aws:acm:us-east-1:778516090662:certificate/c3317376-aa3e-4d4b-a4ca-1c7ba3d62d4f" # Demo Certificate Arn
 
 # profile     = "dev"                   # Dev Profile
 # zone_id     = "Z08796222T9PRBMNUKUNX" #Dev zone Id
