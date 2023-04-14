@@ -21,3 +21,6 @@ We are using this repo to implement Infra for AWS upon which the resources will 
 2. To add variable while applying run in this format `terraform apply -var "var_name=value"`
 3. to apply changes without approval `terraform apply -auto-approve`
 4. to apply changes without approval `terraform destroy -auto-approve`
+5. `aws iam update-server-certificate --server-certificate-name ExampleCertificate --new-server-certificate-name CloudFrontCertificate --new-path /cloudfront/`
+6. `aws iam upload-server-certificate --server-certificate-name certificate_object_name --certificate-body file://*path to your certificate file* --private-key file://*path to your private key file* --certificate-chain file://*path to your CA-bundle file*`
+7. `aws acm import-certificate --certificate file://Certificate.pem --certificate-chain file://CertificateChain.pem --private-key file://PrivateKey.pem`
