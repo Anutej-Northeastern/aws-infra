@@ -255,7 +255,7 @@ data "template_file" "user_data" {
 }
 
 # Resource to create Ec2 launch template
-resource "aws_launch_template" "ec2" {
+resource "aws_launch_template" "asg_launch_config" {
   name          = "asg_launch_config"
   image_id      = var.ami_id
   instance_type = "t2.micro"
@@ -281,7 +281,7 @@ resource "aws_launch_template" "ec2" {
     name = aws_iam_instance_profile.app_instance_profile.name
   }
   tags = {
-    "Name" = "Ec2_Terraform_${timestamp()}"
+    "Name" = "asg_launch_config"
   }
 }
 
@@ -289,7 +289,7 @@ resource "aws_launch_template" "ec2" {
 resource "aws_autoscaling_group" "asg" {
   name = "csye6225-asg-spring2023" ##asg_launch_config
   launch_template {
-    id      = aws_launch_template.ec2.id
+    id      = aws_launch_template.asg_launch_config.id
     version = "$Latest"
   }
   health_check_type   = "EC2"
